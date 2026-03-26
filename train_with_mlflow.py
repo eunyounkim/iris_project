@@ -9,7 +9,11 @@ import mlflow
 import mlflow.sklearn
 import os
 from mlflow.tracking import MlflowClient
-experiment_name = "iris_classification1"
+import dagshub
+# DagsHub와 강제 연결 (이름: iris_project 확인!)
+dagshub.init(repo_owner='eunyounkim', repo_name='iris_project', setup_mlflow=True)
+
+experiment_name = "iris_classification"
 
 # [추가] MLflow 서버 설정 (환경 변수 활용)
 # GitHub Actions 설정 시 Secrets에 넣을 주소임
