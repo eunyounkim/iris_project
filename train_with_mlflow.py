@@ -11,7 +11,11 @@ import os
 from mlflow.tracking import MlflowClient
 import dagshub
 # DagsHub와 강제 연결 (이름: iris_project 확인!)
-dagshub.init(repo_owner='eunyounkim', repo_name='iris_project', setup_mlflow=True)
+dagshub.init(
+    repo_owner='eunyounkim', 
+    repo_name='iris_project', 
+    mlflow=True  # setup_mlflow 대신 mlflow=True를 사용해 보세요.
+)
 
 experiment_name = "iris_classification"
 
