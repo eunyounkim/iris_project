@@ -9,13 +9,11 @@ import mlflow
 import mlflow.sklearn
 import os
 from mlflow.tracking import MlflowClient
-import dagshub
-# DagsHub와 강제 연결 (이름: iris_project 확인!)
-dagshub.init(
-    repo_owner='eunyounkim', 
-    repo_name='iris_project', 
-    mlflow=True  # setup_mlflow 대신 mlflow=True를 사용해 보세요.
-)
+# [수정] dagshub.init을 지우고 아래 3줄을 넣으세요.
+# GitHub Actions의 env에서 설정한 값을 가져와서 직접 연결함
+tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+if tracking_uri:
+    mlflow.set_tracking_uri(tracking_uri)
 
 experiment_name = "iris_classification"
 
@@ -23,6 +21,10 @@ experiment_name = "iris_classification"
 # GitHub Actions 설정 시 Secrets에 넣을 주소임
 tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
 mlflow.set_tracking_uri(tracking_uri)
+if "MLFLOW_TRACKING_USERNAME" in os.environ:
+    os.environ['MLFLOW_TRACKING_USERNAME'] = os.getenv("MLFLOW_TRACKING_USERNAME")
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("MLFLOW_TRACKING_PASSWORD")
+
 mlflow.set_experiment(experiment_name)
 
 # [팁] Scikit-learn 자동 기록 켜기
